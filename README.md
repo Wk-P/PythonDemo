@@ -13,8 +13,16 @@
 
         输入以下指令
 
-            pip3 install scrapy
+            > pip3 install scrapy
 
-        安装完成后, 转调至pythondeom
-+ ### 
+        安装完成后, 在 cmd 命令行中转调至 /path/ScrapySpider/wallpaper文件夹下，自行选择运行以下两种代码
+        
+        1. 下载 latest 图集
+            
+                > scrapy crawl wallpaperspider
 
+        2. 下载 keyword 图集
+        
+                > scrapy crawl searchpaperspider
+
+            默认关键词为 "sakura" 可在程序内自行更换
