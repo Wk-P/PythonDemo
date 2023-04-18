@@ -100,7 +100,7 @@ class SearchWallpaperSpider(scrapy.Spider):
                 img.write(response.body)
                 self.download_number += 1
                 try: 
-                    print(f"[2/3 已下载 {self.download_number}/{self.urls_number}][图片]:{image_name}")
+                    print(f"[2/3 下载中 {self.download_number}/{self.urls_number}][图片]:{image_name}")
                 except:
                     print(f"[错误:抓取链接失败][已获取链接个数 {self.urls_number}]")
             try:
