@@ -1,10 +1,10 @@
 from urllib.parse import urljoin
-import scrapy, os
+import scrapy, os, sys
 
 class SearchWallpaperSpider(scrapy.Spider):
     name = 'searchwallpaperspider'
     allowed_domains = ['wallhaven.cc']
-    search_keyword = "misaka"
+    search_keyword = ""
     start_urls = [f"https://wallhaven.cc/search?q={search_keyword}&page=2"]
     page = 3
     custom_settings = {
@@ -33,6 +33,15 @@ class SearchWallpaperSpider(scrapy.Spider):
         self.image_file_path = './images/' + self.search_keyword + '/'
         if not os.path.exists(self.image_file_path):
             os.makedirs(self.image_file_path)
+        
+        if len(sys.argv) == 1:
+            # Do something with the search keyword
+            self.search_keyword = sys.argv[1]
+        else:
+            print("[ERROR]Search keyword is wrong!")
+            print("JUST ENTER ONE KEYWORD!DON'T ENTER ZERO KEYWORD OR TWO KEYWORDS AND MORE!")
+            os.system('pause')
+            exit(1)
 
         # print(f"[TEST LINE]: {self.start_urls[0]}")
 
