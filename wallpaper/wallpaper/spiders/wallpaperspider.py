@@ -1,5 +1,6 @@
 from urllib.parse import urljoin
 import scrapy, os
+from tqdm import tqdm
 
 class WallpaperSpider(scrapy.Spider):
     name = 'wallpaperspider'
@@ -40,7 +41,9 @@ class WallpaperSpider(scrapy.Spider):
             # print(f"[TEST LINE]:len(self.image_paths[-1]) : {len(self.image_paths[-1])}")
             # print(f"[TEST LINE]:self.image_paths : {self.image_paths}")
             images = []
-            print(f"[已获取][共获取 {self.urls_number} 图片链接]")
+
+            # print(f"[已获取][共获取 {self.urls_number} 图片链接]")
+            
             for image_path in self.image_paths[-1]:
                 # print(f"[获取到的二级链接]:{image_path}")
                 images.append({"image_code": image_path.split('/')[-1], "image_path": image_path})
@@ -61,7 +64,9 @@ class WallpaperSpider(scrapy.Spider):
                 next_url = urljoin(self.start_urls[0], f'latest?page={self.page}')
                 # print(f"[TEST LINE]: urljoin === > {next_url}")
                 self.page += 1
-                print(f"[已获取 {self.page - 2} 页链接]")
+
+                # print(f"[已获取 {self.page - 2} 页链接]")
+                
                 yield scrapy.Request(url=next_url, callback=self.parse, meta={'page': self.page})
 
     def parse_image_details_url(self, response):
@@ -80,7 +85,9 @@ class WallpaperSpider(scrapy.Spider):
             if response.status == 200:
                 image_src = response.css("main section div.scrollbox img::attr('src')").get()
                 self.gotten_number += 1
-                print(f"[1/3 已获取 {self.gotten_number}/{self.urls_number}][下载地址]:{image_src}")
+
+                # print(f"[1/3 已获取 {self.gotten_number}/{self.urls_number}][下载地址]:{image_src}")
+                
                 # 开启下载请求
                 yield scrapy.Request(
                     url=image_src, 
