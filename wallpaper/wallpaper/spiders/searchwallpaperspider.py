@@ -9,7 +9,7 @@ class SearchWallpaperSpider(scrapy.Spider):
     page = 3
     custom_settings = {
         'DOWNLOAD_DELAY': 1,
-        'CONCURRENT_REQUESTS': 5,
+        'CONCURRENT_REQUESTS': 10,
         'LOG_LEVEL' : 'WARNING',
         'RETRY_TIMES': 50,
         'ITEM_PIPELINES': {
@@ -32,8 +32,9 @@ class SearchWallpaperSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.search_keyword = kwargs.get('search_keyword')
-        self.search_keyword = input('Enter your search keyword:')
-        self.max_limit_page = int(kwargs.get('max_limit_page', 1))
+        self.search_keyword = input('\n\nEnter your search keyword:')
+        # self.max_limit_page = int(kwargs.get('max_limit_page', 1))
+        self.max_limit_page = int(input("Crawl number of pages: "))
         if not self.search_keyword:
             print("[ERROR]Search keyword is missing!")
             print("[HINT]Please provide a search keyword using -a argument!")
