@@ -4,8 +4,8 @@ import scrapy, os, sys
 class SearchWallpaperSpider(scrapy.Spider):
     name = 'searchwallpaperspider'
     allowed_domains = ['wallhaven.cc']
-    search_keyword = ""
-    start_urls = [f"https://wallhaven.cc/search?q={search_keyword}&page=2"]
+    # search_keyword = ""
+    # start_urls = [f"https://wallhaven.cc/search?q={search_keyword}&page=2"]
     page = 3
     custom_settings = {
         'DOWNLOAD_DELAY': 1,
@@ -25,23 +25,27 @@ class SearchWallpaperSpider(scrapy.Spider):
     download_number = 0     # 已下载的数量
     gotten_number = 0       # 获取到下载地址
     
-    max_limit_page = 3
+    # max_limit_page = 1
 
     image_paths = []
 
-    def __init__(self):
-        self.image_file_path = './images/' + self.search_keyword + '/'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.search_keyword = kwargs.get('search_keyword')
+        self.search_keyword = input('Enter your search keyword:')
+        self.max_limit_page = int(kwargs.get('max_limit_page', 1))
+        if not self.search_keyword:
+            print("[ERROR]Search keyword is missing!")
+            print("[HINT]Please provide a search keyword using -a argument!")
+            os.system('pause')
+        self.start_urls = [f"https://wallhaven.cc/search?q={self.search_keyword}&page=2"]
+        # print(f"[TEST LINE] self.start_urls: {self.start_urls}")
+        self.image_file_path = f'./images/{self.search_keyword}/'
         if not os.path.exists(self.image_file_path):
             os.makedirs(self.image_file_path)
-        
-        if len(sys.argv) == 1:
-            # Do something with the search keyword
-            self.search_keyword = sys.argv[1]
-        else:
-            print("[ERROR]Search keyword is wrong!")
-            print("JUST ENTER ONE KEYWORD!DON'T ENTER ZERO KEYWORD OR TWO KEYWORDS AND MORE!")
-            os.system('pause')
-            exit(1)
+
+
+
 
         # print(f"[TEST LINE]: {self.start_urls[0]}")
 
@@ -121,4 +125,6 @@ class SearchWallpaperSpider(scrapy.Spider):
             print(f"[已爬取 {self.page - 2} 页][已下载 {self.download_number}/{self.urls_number}][下载完成度 {round(float(self.download_number/self.urls_number*100), 2)}%]")
         else:
             print(f"[错误:抓取链接失败][已获取链接个数 {self.urls_number}]")
-        os.system('pause')
+            # 删除文件夹及其子目录和文件
+            os.rmdir(self.image_file_path)
+            print(f"{self.image_file_path} 已被删除")
