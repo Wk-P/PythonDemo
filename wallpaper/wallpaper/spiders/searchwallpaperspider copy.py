@@ -112,3 +112,4 @@ class SearchWallpaperSpider(scrapy.Spider):
             print(f"[已爬取 {self.page - 2} 页][已下载 {self.download_number}/{self.urls_number}][下载完成度 {round(float(self.download_number/self.urls_number*100), 2)}%]")
         else:
             print(f"[错误:抓取链接失败][已获取链接个数 {self.urls_number}]")
+        os.system('pause')
