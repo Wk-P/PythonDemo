@@ -4,7 +4,7 @@ import scrapy, os
 class SearchWallpaperSpider(scrapy.Spider):
     name = 'searchwallpaperspider'
     allowed_domains = ['wallhaven.cc']
-    search_keyword = "sakura"
+    search_keyword = "misaka"
     start_urls = [f"https://wallhaven.cc/search?q={search_keyword}&page=2"]
     page = 3
     custom_settings = {
@@ -30,7 +30,7 @@ class SearchWallpaperSpider(scrapy.Spider):
     image_paths = []
 
     def __init__(self):
-        self.image_file_path = './images/sakura/'
+        self.image_file_path = './images/' + self.search_keyword + '/'
         if not os.path.exists(self.image_file_path):
             os.makedirs(self.image_file_path)
 
