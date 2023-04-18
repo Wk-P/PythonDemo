@@ -25,7 +25,7 @@ class SearchWallpaperSpider(scrapy.Spider):
     download_number = 0     # 已下载的数量
     gotten_number = 0       # 获取到下载地址
     
-    max_limit_page = 4
+    max_limit_page = 3
 
     image_paths = []
 
